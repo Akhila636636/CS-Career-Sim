@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CS Career Simulator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --color-base-bg: #F9FAFB;
+        --color-card-bg: #FFFFFF;
+        --color-accent: #7C3AED;
+        --color-primary-text: #1F2937;
+        --color-secondary-text: #6B7280;
+        --color-success: #059669;
+        --color-error: #DC2626;
+        --color-warning: #D97706;
+        --gradient-start: rgba(124, 58, 237, 0.05);
+        --gradient-end: rgba(124, 58, 237, 0.08);
+      }
+      .dark {
+        --color-base-bg: #1A1B26;
+        --color-card-bg: #2A2D3E;
+        --color-accent: #A78BFA;
+        --color-primary-text: #F3F4F6;
+        --color-secondary-text: #9CA3AF;
+        --color-success: #34D399;
+        --color-error: #F87171;
+        --color-warning: #FBBF24;
+        --gradient-start: rgba(167, 139, 250, 0.07);
+        --gradient-end: rgba(167, 139, 250, 0.1);
+      }
+      body {
+          background-color: var(--color-base-bg);
+          background-image: radial-gradient(circle at top left, var(--gradient-start), transparent 40%), radial-gradient(circle at bottom right, var(--gradient-end), transparent 50%);
+          transition: background-color 0.3s ease;
+      }
+    </style>
+    <script>
+      // Immediately invoked function to set theme on initial load
+      (function() {
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      })();
+    </script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'base-bg': 'var(--color-base-bg)',
+                        'card-bg': 'var(--color-card-bg)',
+                        'accent': 'var(--color-accent)',
+                        'primary-text': 'var(--color-primary-text)',
+                        'secondary-text': 'var(--color-secondary-text)',
+                        'success': 'var(--color-success)',
+                        'error': 'var(--color-error)',
+                        'warning': 'var(--color-warning)',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    borderRadius: {
+                        'lg': '8px',
+                        '2xl': '1rem',
+                    },
+                    backdropBlur: {
+                        sm: '4px',
+                    }
+                }
+            }
+        }
+    </script>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.27.0"
+  }
+}
+</script>
+</head>
+<body class="font-sans bg-cover bg-center">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+</body>
+</html>

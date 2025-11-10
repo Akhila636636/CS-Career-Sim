@@ -1,0 +1,5 @@
+{
+  "name": "CS Career Simulator",
+  "description": "An interactive web application that provides near-real-life simulations of various computer science job roles to help users find a fulfilling career path.",
+  "requestFramePermissions": []
+}
