@@ -1,3 +1,4 @@
+
 import React, { useState, useCallback, useEffect } from 'react';
 import { View, Role, Scenario, Feedback, LearningResource, ChallengeHistoryItem } from './types';
 import { generateScenario, generateFeedback } from './services/geminiService';
@@ -9,6 +10,7 @@ import Debrief from './components/Debrief';
 import Profile from './components/Profile';
 import Header from './components/Header';
 import Auth from './components/Auth';
+import PersonalityQuiz from './components/PersonalityQuiz';
 import { LoadingSpinner } from './components/icons/LoadingSpinner';
 
 const App: React.FC = () => {
@@ -22,6 +24,7 @@ const App: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [loadingMessage, setLoadingMessage] = useState<string>('');
     const [error, setError] = useState<string | null>(null);
+    
     const [theme, setTheme] = useState<'light' | 'dark'>(() => {
         if (typeof window !== 'undefined') {
             if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
@@ -29,6 +32,13 @@ const App: React.FC = () => {
             }
         }
         return 'light';
+    });
+
+    const [isGamified, setIsGamified] = useState<boolean>(() => {
+        if (typeof window !== 'undefined') {
+            return localStorage.getItem('gamified') === 'true';
+        }
+        return false;
     });
     
     useEffect(() => {
@@ -42,8 +52,23 @@ const App: React.FC = () => {
         }
     }, [theme]);
 
+    useEffect(() => {
+        const root = window.document.documentElement;
+        if (isGamified) {
+            root.classList.add('gamified');
+            localStorage.setItem('gamified', 'true');
+        } else {
+            root.classList.remove('gamified');
+            localStorage.setItem('gamified', 'false');
+        }
+    }, [isGamified]);
+
     const handleToggleTheme = useCallback(() => {
         setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
+    }, []);
+
+    const handleToggleGamified = useCallback(() => {
+        setIsGamified(prev => !prev);
     }, []);
 
     const handleLogin = useCallback(() => {
@@ -169,9 +194,11 @@ const App: React.FC = () => {
                         />;
             case 'profile':
                 return <Profile challengeHistory={challengeHistory} savedResources={savedResources} />;
+            case 'quiz':
+                return <PersonalityQuiz onComplete={handleSelectRole} onClose={() => setView('dashboard')} />;
             case 'dashboard':
             default:
-                return <Dashboard onSelectRole={handleSelectRole} />;
+                return <Dashboard onSelectRole={handleSelectRole} onStartQuiz={() => setView('quiz')} />;
         }
     };
     
@@ -180,8 +207,15 @@ const App: React.FC = () => {
     }
 
     return (
-        <div className="min-h-screen text-primary-text">
-            <Header onNavigate={handleNavigate} onLogout={handleLogout} theme={theme} onToggleTheme={handleToggleTheme} />
+        <div className="min-h-screen text-primary-text transition-colors duration-300">
+            <Header 
+                onNavigate={handleNavigate} 
+                onLogout={handleLogout} 
+                theme={theme} 
+                onToggleTheme={handleToggleTheme}
+                isGamified={isGamified}
+                onToggleGamified={handleToggleGamified}
+            />
             <main className="pt-16">
                 {renderContent()}
             </main>

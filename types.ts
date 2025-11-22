@@ -1,3 +1,4 @@
+
 // Fix: Import React to provide the React namespace.
 import React from 'react';
 
@@ -58,4 +59,4 @@ export interface ChallengeHistoryItem {
     feedback: Feedback;
 }
 
-export type View = 'dashboard' | 'roleDetail' | 'briefing' | 'simulation' | 'debrief' | 'profile';
+export type View = 'dashboard' | 'roleDetail' | 'briefing' | 'simulation' | 'debrief' | 'profile' | 'quiz';

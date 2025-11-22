@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { BriefcaseIcon } from './icons/BriefcaseIcon';
 import { GoogleIcon } from './icons/GoogleIcon';
@@ -30,7 +31,7 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
                     <button
                         type="button"
                         onClick={onLogin}
-                        className="w-full flex items-center justify-center gap-3 px-4 py-2.5 bg-primary-text/90 text-gray-800 font-semibold rounded-lg hover:bg-primary-text transition-colors"
+                        className="w-full flex items-center justify-center gap-3 px-4 py-2.5 bg-white text-gray-800 font-semibold rounded-lg hover:bg-gray-50 transition-colors shadow-sm"
                     >
                         <GoogleIcon className="w-5 h-5" />
                         Sign in with Google
